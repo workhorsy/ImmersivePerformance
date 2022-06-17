@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/immersive_performance/Performance/FirstNode.gd" type="Script" id=1]
+
+[node name="FirstNode" type="Node"]
+script = ExtResource( 1 )
