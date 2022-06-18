@@ -17,12 +17,17 @@ func _initialize() -> void:
 func _finalize() -> void:
 	print("Custom Scene Tree Finalized")
 
+var _prev_frame := -1
+
 func _idle(delta : float) -> bool:
-	#print("tree process frame:%s ticks:%s" % [self.get_frame(), OS.get_ticks_msec()])
+	var frame := self.get_frame()
+	if frame == _prev_frame: return false
+	_prev_frame = frame
+	if _immersive_performance.is_logging: print("tree process frame:%s ticks:%s" % [frame, OS.get_ticks_msec()])
 	return _immersive_performance._idle(delta)
 
 func _iteration(delta : float) -> bool:
-	#print("tree physics frame:%s ticks:%s" % [self.get_frame(), OS.get_ticks_msec()])
+	if _immersive_performance.is_logging: print("tree physics frame:%s ticks:%s" % [self.get_frame(), OS.get_ticks_msec()])
 	return _immersive_performance._iteration(delta)
 
 func _input_event(_event) -> void:

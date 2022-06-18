@@ -4,10 +4,15 @@
 
 extends Node
 
+var _prev_frame := -1
+
 func _physics_process(_delta : float) -> void:
-	#print("first physics frame:%s ticks:%s" % [self.get_tree().get_frame(), OS.get_ticks_msec()])
+	if ImmersivePerformance.is_logging: print("first physics frame:%s ticks:%s" % [self.get_tree().get_frame(), OS.get_ticks_msec()])
 	ImmersivePerformance._on_first_node_physics_process()
 
 func _process(_delta : float) -> void:
-	#print("first process frame:%s ticks:%s" % [self.get_tree().get_frame(), OS.get_ticks_msec()])
+	var frame := self.get_tree().get_frame()
+	if frame == _prev_frame: return
+	_prev_frame = frame
+	if ImmersivePerformance.is_logging: print("first process frame:%s ticks:%s" % [frame, OS.get_ticks_msec()])
 	ImmersivePerformance._on_first_node_process()

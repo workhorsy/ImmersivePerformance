@@ -12,6 +12,7 @@ var _fps_timer : Timer
 var _is_holding_add_ball := false
 var _is_blocking_physics := false
 var _is_blocking_process := false
+var _prev_frame := -1
 
 func _ready() -> void:
 	# Setup random number generator
@@ -34,7 +35,18 @@ func _on_fps_timeout() -> void:
 	OS.set_window_title(title)
 
 func _process(_delta : float) -> void:
-	#print("world process frame:%s ticks:%s" % [self.get_tree().get_frame(), OS.get_ticks_msec()])
+	var frame := self.get_tree().get_frame()
+	if frame == _prev_frame: return
+	_prev_frame = frame
+
+
+#	if true:
+#		var start := OS.get_ticks_msec()
+#		var end := OS.get_ticks_msec()
+#		while end - start < 20:
+#			end = OS.get_ticks_msec()
+
+	if ImmersivePerformance.is_logging: print("world process frame:%s ticks:%s" % [frame, OS.get_ticks_msec()])
 	if _is_holding_add_ball:
 		var ball = _ball_scene.instance()
 		self.add_child(ball)
@@ -42,7 +54,7 @@ func _process(_delta : float) -> void:
 		_balls.append(ball)
 
 	if _is_blocking_process:
-		#print("process !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! frame:%s" % [self.get_tree().get_frame()])
+		print("process !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! frame:%s" % [self.get_tree().get_frame()])
 		_is_blocking_process = false
 		var start := OS.get_ticks_msec()
 		var end := OS.get_ticks_msec()
@@ -51,9 +63,9 @@ func _process(_delta : float) -> void:
 		#print("Done")
 
 func _physics_process(_delta : float) -> void:
-	#print("world physics frame:%s ticks:%s" % [self.get_tree().get_frame(), OS.get_ticks_msec()])
+	if ImmersivePerformance.is_logging: print("world physics frame:%s ticks:%s" % [self.get_tree().get_frame(), OS.get_ticks_msec()])
 	if _is_blocking_physics:
-		#print("physics !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! frame:%s" % [self.get_tree().get_frame()])
+		print("physics !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! frame:%s" % [self.get_tree().get_frame()])
 		_is_blocking_physics = false
 		var start := OS.get_ticks_msec()
 		var end := OS.get_ticks_msec()
@@ -62,7 +74,7 @@ func _physics_process(_delta : float) -> void:
 		#print("Done")
 
 func _block_call_deferred() -> void:
-	#print("deferred !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! frame:%s" % [self.get_tree().get_frame()])
+	print("deferred !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! frame:%s" % [self.get_tree().get_frame()])
 	var start := OS.get_ticks_msec()
 	var end := OS.get_ticks_msec()
 	while end - start < 5000:

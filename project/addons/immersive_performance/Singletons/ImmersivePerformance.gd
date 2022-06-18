@@ -16,6 +16,10 @@ var _deferred_start_msec := 0
 var _deferred_end_msec := 0
 var _deferred_used_msec := 0
 
+var _draw_start_msec := 0
+var _draw_end_msec := 0
+var _draw_used_msec := 0
+
 var _frame_used_msec := 0
 
 var _loads := PoolIntArray()
@@ -29,12 +33,29 @@ var _last_node_scene := preload("res://addons/immersive_performance/Performance/
 
 var _scene_tree = null
 var _is_setup := false
+var is_logging := false
 
 func setup(scene_tree : SceneTree) -> void:
 	_scene_tree = scene_tree
 	_loads.resize(120)
 	_loads.fill(0)
+
+	VisualServer.connect("frame_pre_draw", self, "_on_pre_draw")
+	VisualServer.connect("frame_post_draw", self, "_on_post_draw")
+
 	_is_setup = true
+
+func _on_pre_draw() -> void:
+	_draw_start_msec = OS.get_ticks_msec()
+	if ImmersivePerformance.is_logging: print("first render frame:%s ticks:%s" % [self.get_tree().get_frame(), OS.get_ticks_msec()])
+
+func _on_post_draw() -> void:
+	_draw_end_msec = OS.get_ticks_msec()
+	_draw_used_msec = _draw_end_msec - _draw_start_msec
+	if ImmersivePerformance.is_logging: print("last render frame:%s ticks:%s" % [self.get_tree().get_frame(), OS.get_ticks_msec()])
+
+	# FIXME: Move to first node physics run, because render does not always happen, and physics always does
+	self._on_calculate_totals()
 
 # Called before running all deferred and node _process functions
 func _idle(_delta : float) -> bool:
@@ -92,13 +113,14 @@ func _on_last_node_physics_process() -> void:
 func _on_last_node_process() -> void:
 	_process_end_msec = OS.get_ticks_msec()
 
+func _on_calculate_totals() -> void:
 	# Total time used for physics, process, and deferred
 	_physics_used_msec = _physics_end_msec - _physics_start_msec
 	_process_used_msec = _process_end_msec - _process_start_msec
 	_deferred_used_msec = _deferred_end_msec - _deferred_start_msec
-	_frame_used_msec = _physics_used_msec + _process_used_msec + _deferred_used_msec
-	if _frame_used_msec > 2:
-		print("phy %s pro %s def %s" % [_physics_used_msec, _process_used_msec, _deferred_used_msec])
+	_frame_used_msec = _physics_used_msec + _process_used_msec + _deferred_used_msec + _draw_used_msec
+	#if _frame_used_msec > 2:
+	print("phy %s pro %s def %s ren %s" % [_physics_used_msec, _process_used_msec, _deferred_used_msec, _draw_used_msec])
 
 	# Calculate the average load
 	_loads_total -= _loads[_loads_index]
