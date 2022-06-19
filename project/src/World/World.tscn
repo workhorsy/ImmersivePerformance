@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/World/World.gd" type="Script" id=1]
 
@@ -7,6 +7,9 @@ extents = Vector3( 100, 2, 100 )
 
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 200, 4, 200 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.313726, 0.254902, 0.145098, 1 )
 
 [node name="World" type="Spatial"]
 script = ExtResource( 1 )
@@ -27,6 +30,7 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Terrain/CollisionShape"]
 mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
 
 [node name="ButtonAddPhysicsBody" type="Button" parent="."]
 margin_left = 380.0

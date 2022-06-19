@@ -56,6 +56,7 @@ func _on_post_draw() -> void:
 
 	# FIXME: Move to first node physics run, because render does not always happen, and physics always does
 	self._on_calculate_totals()
+	self.get_tree().current_scene.update()
 
 # Called before running all deferred and node _process functions
 func _idle(_delta : float) -> bool:
@@ -67,11 +68,11 @@ func _idle(_delta : float) -> bool:
 func _iteration(_delta : float) -> bool:
 	if not _is_setup: return false
 
-	# Reset the frame data
-	_process_start_msec = 0
-	_process_end_msec = 0
-	_physics_start_msec = 0
-	_physics_end_msec = 0
+#	# Reset the frame data
+#	_process_start_msec = 0
+#	_process_end_msec = 0
+#	_physics_start_msec = 0
+#	_physics_end_msec = 0
 
 	var target = _scene_tree.current_scene
 	if not target: return false
