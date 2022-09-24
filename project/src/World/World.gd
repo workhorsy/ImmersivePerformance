@@ -59,7 +59,7 @@ func _process(_delta : float) -> void:
 		_is_blocking_process = false
 		var start := OS.get_ticks_msec()
 		var end := OS.get_ticks_msec()
-		while end - start < 5000:
+		while end - start < 2000:
 			end = OS.get_ticks_msec()
 		#print("Done")
 
@@ -70,7 +70,7 @@ func _physics_process(_delta : float) -> void:
 		_is_blocking_physics = false
 		var start := OS.get_ticks_msec()
 		var end := OS.get_ticks_msec()
-		while end - start < 5000:
+		while end - start < 2000:
 			end = OS.get_ticks_msec()
 		#print("Done")
 
@@ -78,7 +78,7 @@ func _block_call_deferred() -> void:
 	print("deferred !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! frame:%s" % [self.get_tree().get_frame()])
 	var start := OS.get_ticks_msec()
 	var end := OS.get_ticks_msec()
-	while end - start < 5000:
+	while end - start < 2000:
 		end = OS.get_ticks_msec()
 	#print("Done")
 
