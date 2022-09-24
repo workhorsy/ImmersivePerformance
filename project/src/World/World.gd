@@ -49,10 +49,11 @@ func _process(_delta : float) -> void:
 
 	if ImmersivePerformance.is_logging: print("world process frame:%s ticks:%s" % [frame, OS.get_ticks_msec()])
 	if _is_holding_add_ball:
-		var ball = _ball_scene.instance()
-		self.add_child(ball)
-		ball.transform.origin += Vector3(_rng.randf_range(-50.0, 50.0), _rng.randf_range(-50.0, 50.0), _rng.randf_range(-50.0, 50.0))
-		_balls.append(ball)
+		for i in 10:
+			var ball = _ball_scene.instance()
+			self.add_child(ball)
+			ball.transform.origin += Vector3(_rng.randf_range(-50.0, 50.0), _rng.randf_range(-50.0, 50.0), _rng.randf_range(-50.0, 50.0))
+			_balls.append(ball)
 
 	if _is_blocking_process:
 		print("process !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! frame:%s" % [self.get_tree().get_frame()])
