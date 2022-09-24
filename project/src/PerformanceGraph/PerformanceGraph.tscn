@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/PerformanceGraph/PerformanceGraph.gd" type="Script" id=1]
+
+[node name="PerformanceGraph" type="Node2D"]
+position = Vector2( 900, 500 )
+script = ExtResource( 1 )
+
+[node name="LineBase" type="Line2D" parent="."]
+width = 2.0
+default_color = Color( 0, 0, 0, 1 )
+
+[node name="LinePhysics" type="Line2D" parent="."]
+position = Vector2( 0, -2 )
+width = 2.0
+default_color = Color( 0, 0.164706, 1, 1 )
+
+[node name="LineProcess" type="Line2D" parent="."]
+position = Vector2( 0, -4 )
+width = 2.0
+default_color = Color( 1, 0, 0, 1 )
+
+[node name="LineDeferred" type="Line2D" parent="."]
+position = Vector2( 0, -6 )
+width = 2.0
+default_color = Color( 0, 1, 0, 1 )
+
+[node name="LineRender" type="Line2D" parent="."]
+position = Vector2( 0, -8 )
+width = 2.0
+default_color = Color( 1, 0.772549, 0, 1 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -9.0
+margin_top = -67.0
+margin_right = 122.0
+margin_bottom = 29.0
+color = Color( 0, 0, 0, 0.317647 )
+
+[node name="LabelPhysics" type="Label" parent="."]
+modulate = Color( 0, 0.164706, 1, 1 )
+margin_top = -60.0
+margin_right = 48.0
+margin_bottom = -46.0
+text = "Physics"
+
+[node name="LabelProcess" type="Label" parent="."]
+modulate = Color( 1, 0, 0, 1 )
+margin_top = -42.0
+margin_right = 50.0
+margin_bottom = -28.0
+text = "Process"
+
+[node name="LabelDeferred" type="Label" parent="."]
+modulate = Color( 0, 1, 0, 1 )
+margin_top = -21.0
+margin_right = 56.0
+margin_bottom = -7.0
+text = "Deferred"
+
+[node name="LabelRender" type="Label" parent="."]
+modulate = Color( 1, 0.772549, 0, 1 )
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Render"

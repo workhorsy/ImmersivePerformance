@@ -25,6 +25,8 @@ func _idle(delta : float) -> bool:
 	return _immersive_performance._idle(delta)
 
 func _iteration(delta : float) -> bool:
+	#var _mon = Performance.get_monitor(Performance.TIME_PROCESS) * 1000
+	#print(_mon)
 	if _immersive_performance.is_logging: print("tree physics frame:%s ticks:%s" % [self.get_frame(), OS.get_ticks_msec()])
 	return _immersive_performance._iteration(delta)
 
