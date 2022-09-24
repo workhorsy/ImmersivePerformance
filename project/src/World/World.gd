@@ -3,6 +3,24 @@
 # https://github.com/workhorsy/ImmersivePerformance
 
 
+
+# FIXME: We are assuming the time between (A) and (B) is deferred time. Is this render time?
+# FIXME: We are assuming the time between (X) and (Z) is zero. Is this deferrer or render time?
+
+# loop:
+#	tree _iteration
+#	first node physics
+#	world node physics
+#	last node physics (A)
+
+#	tree _idle (B) (X)
+#	first node process (Z)
+#	world node process
+#	last node process
+# TODO:
+# . is there a way to get time for each function call?
+# . 
+
 extends Spatial
 
 var _ball_scene := preload("res://src/Ball/Ball.tscn")
