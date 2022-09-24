@@ -11,12 +11,6 @@ onready var _line_physics := $Graph/LinePhysics
 onready var _line_process := $Graph/LineProcess
 onready var _line_deferred := $Graph/LineDeferred
 onready var _line_render := $Graph/LineRender
-var _rng : RandomNumberGenerator
-
-func _ready() -> void:
-	# Setup random number generator
-	_rng = RandomNumberGenerator.new()
-	_rng.randomize()
 
 var _offset := 0.0
 func update() -> void:

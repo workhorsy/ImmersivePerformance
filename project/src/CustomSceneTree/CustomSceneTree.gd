@@ -6,18 +6,16 @@ extends SceneTree
 class_name CustomSceneTree
 
 var _immersive_performance = null
-
+var _prev_frame := -1
 
 func _initialize() -> void:
-	_immersive_performance = self.current_scene.get_node_or_null("/root/ImmersivePerformance")
+	_immersive_performance = self.current_scene.get_node("/root/ImmersivePerformance")
 	_immersive_performance.setup(self)
 
 	print("Custom Scene Tree Initialized")
 
 func _finalize() -> void:
 	print("Custom Scene Tree Finalized")
-
-var _prev_frame := -1
 
 func _idle(delta : float) -> bool:
 	var frame := self.get_frame()
